@@ -5,7 +5,7 @@ const galleryEl = document.querySelector(".gallery");
 
 createMarkup();
 
-var lightbox = new SimpleLightbox(".gallery a", {
+let lightbox = new SimpleLightbox(".gallery a", {
   captionsData: "alt",
   captionDelay: 250,
 });

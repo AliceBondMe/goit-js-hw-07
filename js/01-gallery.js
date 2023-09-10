@@ -11,29 +11,28 @@ galleryEl.addEventListener("click", handleClick);
 function handleClick(evt) {
   evt.preventDefault();
 
-  if (!evt.target.classList.contains("gallery__image")) {
+  if (evt.target.nodeName !== "IMG") {
     return;
   }
 
   const bigImageRef = evt.target.dataset.source;
 
-  instance = basicLightbox.create(`
+  instance = basicLightbox.create(
+    `
     <img src="${bigImageRef}" width="800" height="600">
-`);
+`,
+    {
+      onShow: (instance) => window.addEventListener("keydown", handleKeydown),
+      onClose: (instance) =>
+        window.removeEventListener("keydown", handleKeydown),
+    }
+  );
   instance.show();
-  document.addEventListener("keydown", handleKeydown);
 }
 
 function handleKeydown(evt) {
   if (evt.key === "Escape") {
     instance.close();
-  }
-  doNotListenEsc();
-}
-
-function doNotListenEsc() {
-  if (!instance.visible()) {
-    document.removeEventListener("keydown", handleKeydown);
   }
 }
 
